@@ -89,3 +89,8 @@ deploy:
 # liuyan add 
 avatar: /uploads/avatar.jpg
 favicon: /images/favicon.ico
+
+math:
+  engine: 'mathjax' # or 'katex'
+  mathjax: # src: custom_mathjax_source
+    config: # MathJax config

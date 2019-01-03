@@ -50,5 +50,6 @@
 ```shell
 npm install hexo-deployer-git --save
 npm install hexo-asset-image --save
+npm install hexo-math --save
 ```
 
