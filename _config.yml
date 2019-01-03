@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: You're Beautiful
 subtitle:
 description: Stay Hungry, Stay Foolish. 
 keywords:
@@ -17,8 +17,9 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :category/:year:month:day-:urlname.html 
 permalink_defaults:
+    urlname: index
 
 # Directory 目录配置
 source_dir: source          # 源文件夹，这个文件夹用来存放内容。
