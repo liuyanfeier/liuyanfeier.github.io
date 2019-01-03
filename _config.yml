@@ -9,7 +9,7 @@ description: Stay Hungry, Stay Foolish.
 keywords:
 author: liuyan
 language: 
-- zh-tw
+- zh-CN
 - en
 timezone:
 
@@ -20,27 +20,27 @@ root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
-# Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+# Directory 目录配置
+source_dir: source          # 源文件夹，这个文件夹用来存放内容。
+public_dir: public          # 公共文件夹，这个文件夹用于存放生成的站点文件。
+tag_dir: tags               # 标签文件夹
+archive_dir: archives       # 归档文件夹
+category_dir: categories    # 分类文件夹
+code_dir: downloads/code    # include code 文件夹
+i18n_dir: :lang             # 国际化（i18n）文件夹
+skip_render:                # 跳过指定文件的渲染，您可使用 glob 表达式来匹配路径。
 
 # Writing
-new_post_name: :title.md # File name of new posts
-default_layout: post
-titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
-filename_case: 0
-render_drafts: false
+new_post_name: :title.md    # File name of new posts
+default_layout: post        # 默认布局
+titlecase: false            # Transform title into titlecase
+external_link: true         # Open external links in new tab
+filename_case: 0            # 转换文件名，1代表小写；2代表大写；默认为0，意思就是创建文章的时候，是否自动帮你转换文件名
+render_drafts: false        # 是否渲染_drafts目录下的文章，默认为false
 post_asset_folder: true
 relative_link: false
 future: true
-highlight:
+highlight:                  # 代码块的设置
   enable: true
   line_number: true
   auto_detect: false
@@ -75,7 +75,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
