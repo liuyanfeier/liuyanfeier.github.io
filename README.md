@@ -43,15 +43,12 @@
    1. 把_config.yml里的post_asset_folder设为true
    2. 在hexo目录下执行: `npm install hexo-asset-image –save`，下载安装一个可以上传本地图片的插件 
    3. 运行hexo new “xxxx”来生成md博文时，source/_posts文件夹内除了xxxx.md文件还有一个同名的文件夹 
-   4. 在xxxx.md中引入图片时，先把图片复制到xxxx这个文件夹中，然后只需要在xxxx.md中按照markdown的格式引入图片
+   4. 在xxxx.md中引入图片时，先把图片复制到xxxx这个文件夹中，然后只需要在xxxx.md中按照markdown的格式引入图片. `![你想输入的替代文字](xxxx/图片名.jpg)`
 
-   `![你想输入的替代文字](xxxx/图片名.jpg)`
-
-### 出现错误
+### 安装插件
 
 ```shell
-hexo d
-ERROR Deployer not found: git
 npm install hexo-deployer-git --save
+npm install hexo-asset-image --save
 ```
 

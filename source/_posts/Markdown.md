@@ -1,11 +1,14 @@
 ---
 layout:     post
 title:      Markdown
-subtitle:   一些markdown语法知识
+subtitle:   markdown语法知识
 date:       2018-01-22
 author:     liuyan
+urlname:    Markdown
+catalog: true
 tags:
     - 工具
+categories: 工具
 ---
 
 # 语法快捷键
@@ -29,7 +32,7 @@ tags:
 17. \[]()   插入网址
 18. \![]() 插入图片
 
-
+# 公式
 
 ## 关系运算符
 
@@ -37,7 +40,7 @@ $$
 \times  \div  \mid  \cdot  \circ \ast  \bigodot  \bigotimes  \bigoplus  \leq  \geq  \neq  \approx  \equiv  \sum  \prod  \coprod
 $$
 
-![关系运算符](Markdown/关系运算符.png)
+![1](1.jpg)
 
 ## 集合运算符
 
@@ -45,7 +48,7 @@ $$
 \emptyset  \in  \notin  \subset  \supset  \subseteq  \supseteq  \bigcap  \bigcup  \bigvee  \bigwedge  \biguplus  \bigsqcup 
 $$
 
-![集合运算符](Markdown/集合运算符.png)
+![2](Markdown/2.jpg)
 
 ## 数学运算符
 
@@ -53,7 +56,7 @@ $$
 \log  \lg  \ln  \bot  \angle  \sin  \cos  \tan  \cot  \sec  \csc  \prime  \int  \iint  \iiint  \oint  \lim  \infty  \nabla  \mathrm{d} a^2 a_1
 $$
 
-![数学运算符](Markdown/数学运算符.png)
+![3](Markdown/3.jpg)
 
 ## 实例
 
@@ -65,7 +68,8 @@ $$
 \end{vmatrix}
 $$
 
-![矩阵](Markdown/矩阵.png)
+![4](Markdown/4.jpg)
+
 $$
 lim_{x \to \infty} \ exp(-x)=0
 $$
