@@ -1,9 +1,12 @@
 ---
 title: {{ title }}
 date: {{ date }}
-categories:  
-tags: []
+author:     liuyan
 urlname: 
+catalog:    true
+tags: 
+    - 
+categories:  
 ---
 # 引言
 

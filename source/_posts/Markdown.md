@@ -1,11 +1,10 @@
 ---
 layout:     post
 title:      Markdown
-subtitle:   markdown语法知识
 date:       2018-01-22
 author:     liuyan
 urlname:    Markdown
-catalog: true
+catalog:    true
 tags:
     - 工具
 categories: 工具
@@ -21,6 +20,7 @@ categories: 工具
 - 行内代码`代码`    \`代码\`
 - option + command + b 插入公式
 - \*斜线\*    *斜线*    或者 command + i
+<!-- more -->
 - \*\*加粗\*\*    **加粗**   或者 command + b
 - **~**\~删除~\~    ~~删除~~
 - 水平分割线 ---
