@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans,en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="语音识别,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="语音识别基本架构 上式中W表示文字序列，Y表示语音输入。 公式1表示语音识别的目标是在给定语音输入的情况下，找到可能性最大的文字序列。 根据贝叶斯定理，可以得到公式2，其中分母表示出现这条语音的概率，它相比于求解的文字序列没有参数关系，可以在求解时忽略，进而得到公式3。 公式3中第一部分表示给定一个文字序列出现这条音频的概率，它就是语音识别中的声学模型；第二部分表示出现这个文字序列的概率，它就是语">
+<meta name="keywords" content="语音识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语音识别基本原理">
+<meta property="og:url" content="http://yoursite.com/2017/10/07/语音识别基本原理/index.html">
+<meta property="og:site_name" content="You&#39;re Beautiful">
+<meta property="og:description" content="语音识别基本架构 上式中W表示文字序列，Y表示语音输入。 公式1表示语音识别的目标是在给定语音输入的情况下，找到可能性最大的文字序列。 根据贝叶斯定理，可以得到公式2，其中分母表示出现这条语音的概率，它相比于求解的文字序列没有参数关系，可以在求解时忽略，进而得到公式3。 公式3中第一部分表示给定一个文字序列出现这条音频的概率，它就是语音识别中的声学模型；第二部分表示出现这个文字序列的概率，它就是语">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/1.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/2.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/3.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/4.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/5.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/6.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/7.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/8.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/9.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/10.png">
+<meta property="og:updated_time" content="2019-01-07T08:55:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="语音识别基本原理">
+<meta name="twitter:description" content="语音识别基本架构 上式中W表示文字序列，Y表示语音输入。 公式1表示语音识别的目标是在给定语音输入的情况下，找到可能性最大的文字序列。 根据贝叶斯定理，可以得到公式2，其中分母表示出现这条语音的概率，它相比于求解的文字序列没有参数关系，可以在求解时忽略，进而得到公式3。 公式3中第一部分表示给定一个文字序列出现这条音频的概率，它就是语音识别中的声学模型；第二部分表示出现这个文字序列的概率，它就是语">
+<meta name="twitter:image" content="http://yoursite.com/2017/10/07/语音识别基本原理/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/07/语音识别基本原理/">
+
+
+
+
+
+  <title>语音识别基本原理 | You're Beautiful</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">You're Beautiful</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/语音识别基本原理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="You're Beautiful">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">语音识别基本原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-07T15:32:30+08:00">
+                2017-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/语音识别/" itemprop="url" rel="index">
+                    <span itemprop="name">语音识别</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="语音识别基本架构"><a href="#语音识别基本架构" class="headerlink" title="语音识别基本架构"></a>语音识别基本架构</h2><p><img src="/2017/10/07/语音识别基本原理/1.png" alt=""></p>
+<p>上式中W表示文字序列，Y表示语音输入。</p>
+<p>公式1表示语音识别的目标是在给定语音输入的情况下，找到可能性最大的文字序列。</p>
+<p>根据贝叶斯定理，可以得到公式2，其中分母表示出现这条语音的概率，它相比于求解的文字序列没有参数关系，可以在求解时忽略，进而得到公式3。</p>
+<p>公式3中第一部分表示给定一个文字序列出现这条音频的概率，它就是语音识别中的声学模型；第二部分表示出现这个文字序列的概率，它就是语音识别中的语言模型。</p>
+<p>无论是传统的方法也好，现在火热的深度神经网络的方法也罢，目前的语音识别在架构上都没有脱离上面的公式，也就是说都离不开AM和LM。</p>
+<a id="more"></a>
+<p>下面分别对这两部分进行介绍。</p>
+<h2 id="声学模型（Acoustic-Model，AM）"><a href="#声学模型（Acoustic-Model，AM）" class="headerlink" title="声学模型（Acoustic Model，AM）"></a>声学模型（Acoustic Model，AM）</h2><p>声学模型可以理解为是对发声的建模，它能够把语音输入转换成声学表示的输出，更准确的说是给出语音属于某个声学符号的概率。在英文中这个声学符号可以是音节或者更小的颗粒度音素（phone）；在中文中这个声学符号可以是声韵母或者是颗粒度同英文一样小的音素。</p>
+<h3 id="CD-DNN—HMM模型"><a href="#CD-DNN—HMM模型" class="headerlink" title="CD-DNN—HMM模型"></a>CD-DNN—HMM模型</h3><p>公式3中的声学模型就可以表示为下面公式4的形式：</p>
+<p><img src="/2017/10/07/语音识别基本原理/2.png" alt=""></p>
+<p>其中Q表示发音单位的序列。从公式中可以看到，声学模型最终转换成了一个语音到发音序列的模型和一个发音序列到输出文字序列的字典。这里的发音序列通常是音素，到此为止声学模型是从语音到音素状态的一个描述。</p>
+<p>为了对不同上下文的音素加以区分，通常使用上下文相关的“三音子”作为建模单元。可以用下图表示：</p>
+<p><img src="/2017/10/07/语音识别基本原理/3.png" alt=""></p>
+<p>公式4中的字典部分表示为如下公式5，其意义是把每个文字拆分成若干发音符号的序列。</p>
+<p><img src="/2017/10/07/语音识别基本原理/4.png" alt=""></p>
+<p>公式4中的声学部分可以继续分解为如下公式6：</p>
+<p><img src="/2017/10/07/语音识别基本原理/5.png" alt=""></p>
+<p>公式6表示声学建模的颗粒度可以继续分解为更小的状态（state）。通常一个三音子对应有3个状态（静音通常是5个状态），那么声学建模的总数就是3*Q^3+5这么多。为了压缩建模单元数量，状态绑定的技术被大量使用，它使得发音类似的状态用一个模型表示，从而减少了参数量。具体绑定形式如下图所示：</p>
+<p><img src="/2017/10/07/语音识别基本原理/6.png" alt=""></p>
+<p>基于上面的推导，声学模型是一个描述语音和状态之间转换的模型。<br>此时，引入HMM假设：状态是隐变量，语音是观测值，状态之间的跳转符合马尔科夫假设。那么声学模型可以继续表示为如下公式：</p>
+<p><img src="/2017/10/07/语音识别基本原理/7.png" alt=""></p>
+<p>其中a表示转移概率，b表示发射概率。用图来表示的话就是下图中的结构：</p>
+<p><img src="/2017/10/07/语音识别基本原理/8.png" alt=""></p>
+<p>如图中所示，观测概率通常用GMM或是DNN来描述。这就是CD-GMM-HMM架构和CD-DNN-HMM架构的语音识别声学模型。CD-DNN-HMM的架构图表示如下：</p>
+<p><img src="/2017/10/07/语音识别基本原理/9.png" alt=""></p>
+<h3 id="CTC模型"><a href="#CTC模型" class="headerlink" title="CTC模型"></a>CTC模型</h3><p>在基于CD-DNN-HMM架构的语音识别声学模型中，训练DNN通常需要帧对齐标签。在GMM中，这个对齐操作是通过EM算法不断迭代完成的。</p>
+<ul>
+<li>E-step：估计(重估)GMM参数</li>
+<li>M-step：使用BW(Baum-Welch算法)对齐</li>
+</ul>
+<p>此外对于HMM假设一直受到诟病，等到RNN出现之后，使用RNN来对时序关系进行描述来取代HMM成为当时的热潮。</p>
+<p>随着神经网络优化技术的发展和GPU计算能力的不断提升，最终使用RNN和CTC来进行建模实现了end-to-end语音识别的声学模型。</p>
+<p>CTC的全称是Connectionist Temporal Classification，中文翻译大概是连接时序分类。它要达到的目标就是直接将语音和相应的文字对应起来，实现时序问题的分类。<br>用公式来描述的话，CTC的公式推导如下：<br>$$<br>p ( \pi | x ) = \prod _ { t = 1 } ^ { T } y _ { \pi _ { t } } ^ { t } , \forall \pi \in L ^ { T }<br>$$</p>
+<p>其中π表示文字序列，X表示语音输入，y表示RNN的输出。由于很多帧可以输出同样的一个文字，同时很多帧也可以没有任何输出，因此定义了一个多对一的函数，把输出序列中重复的字符合并起来，形成唯一的序列，进而公式表示如下：<br>$$<br>p ( l | x ) = \sum _ { \pi \in \Re ^ { - 1 } ( l ) } p ( \pi | x )<br>$$</p>
+<p>起始l表示对应的标注文本，而π是带有冗余的神经网络输出。求解上述公式，需要使用前后向算法。</p>
+<p>前向因子：<br>$$<br>\alpha _ { t } ( s ) \stackrel { d e f } { = } \sum _ { \pi \in N ^ { t } : \Re \left( \pi _ { 1 : t } = l _ { 1 : s } \right) t ^ { \prime } = 1 } ^ { t } y _ { \pi _ { t } ^ { \prime } } ^ { t ^ { \prime } }<br>$$</p>
+<p>后向因子：<br>$$<br>\beta _ { t } ( s ) = \sum _ { \pi \in \Re ^ { - 1 } ( l ) : \pi _ { t } = l _ { s } ^ { \prime } } y _ { l _ { s } ^ { \prime } } ^ { t } \prod _ { t = 1 } ^ { T } y _ { \pi _ { t } } ^ { t }<br>$$</p>
+<p>那么神经网络的输出和前后向因子的关系可以表示为：<br>$$<br>\alpha _ { t } ( s ) \beta _ { t } ( s ) = \sum _ { \pi \in \Re ^ { - 1 } ( l ) : \pi _ { t } = l _ { s } ^ { \prime } } y _ { l _ { s } ^ { \prime } } ^ { t } \prod _ { t = 1 } ^ { T } y _ { \pi _ { t } } ^ { t }<br>$$</p>
+<p>进而得到：<br>$$<br>p ( l | x ) = \sum _ { s = 1 } ^ { \left| l ^ { \prime } \right| } \frac { \alpha _ { t } ( s ) \beta _ { t } ( s ) } { y _ { l _ { s } ^ { t } } }<br>$$</p>
+<p>利用上述公式，就可以进行神经网络的训练了，这里仍然可以描述为EM的思想：</p>
+<ul>
+<li>E步：使用BPTT算法优化神经网络参数；</li>
+<li>M步：使用神经网络的输出，重新寻找最优的对齐关系。</li>
+</ul>
+<p>CTC可以看成是一个分类方法，甚至可以看作是目标函数。在构建end-to-end声学模型的过程中，CTC起到了很好的自动对齐的效果。同传统的基于CD-DNN-HMM的方法相比，对齐效果是这样的：</p>
+<p><img src="/2017/10/07/语音识别基本原理/10.png" alt=""></p>
+<p>基于帧对齐的方法强制要求切分好的帧对齐到对应的标签上去，而CTC则可以时帧的输出为空，只有少数帧对齐到对应的输出标签上。</p>
+<h3 id="End-to-End模型"><a href="#End-to-End模型" class="headerlink" title="End-to-End模型"></a>End-to-End模型</h3><p>由于神经网络强大的建模能力，End-to-End的输出标签也不再需要像传统架构一样的进行细分。例如对于中文，输出不再需要进行细分为状态、音素或者声韵母，直接将汉字作为输出即可；对于英文，考虑到英文单词的数量庞大，可以使用字母作为输出标签。</p>
+<p>从这一点出发，我们可以认为神经网络将声学符号到字符串的映射关系也一并建模学习了出来，这部分是在传统的框架中时词典所应承担的任务。针对这个模块，传统框架中有一个专门的建模单元叫做G2P（grapheme-to-phoneme），来处理集外词（out of vocabulary，OOV）。在End-to-End的声学模型中，可以没有词典，没有OOV，也没有G2P。这些全都被建模在一个神经网络中。</p>
+<p>另外，在传统的框架结构中，语音需要分帧，加窗，提取特征（MFCC、PLP等）。在基于神经网络的声学模型中，通常使用更裸的Fbank特征。在End-to-End的识别中，使用更简单的特征比如FFT等也是常见的做法。或许在不久的将来，语音的采样点也可以作为输入，这就是更加彻底的End-to-End声学模型。</p>
+<p>除此之外，End-to-End的声学模型中已经带有了语言模型的信息，它是通过RNN在输出序列上学习得到的。但这个语言模型仍然比较弱，如果外加一个更大数据量的语言模型，解码的效果会更好。因此，End-to-End现在指声学模型部分，等到不需要语言模型的时候，才是完全的End-to-End。</p>
+<h2 id="语言模型（Language-Model，-LM）"><a href="#语言模型（Language-Model，-LM）" class="headerlink" title="语言模型（Language Model， LM）"></a>语言模型（Language Model， LM）</h2><p>语言模型的作用之一为消解多音字的问题，在声学模型给出发音序列之后，从候选的文字序列中找出概率最大的字符串序列。<br>语言模型还会对声学的解码作约束和重打分，让最终识别结果符合语法规则。目前最常见的是N-Gram语言模型和基于RNN的语言模型。</p>
+<h2 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h2><p>传统的语音识别解码都是建立在WFST的基础之上，它是将HMM、词典以及语言模型编译成一个网络。解码就是在这个WFST构造的动态网络空间中，找到最优的输出字符序列。搜索通常使用Viterbi算法，另外为了防止搜索空间爆炸，通常会采用剪枝算法，因此搜索得到的结果可能不是最优结果。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="liuyan 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/语音识别/" rel="tag"><i class="fa fa-tag"></i> 语音识别</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/03/git基础/" rel="next" title="git基础">
+                <i class="fa fa-chevron-left"></i> git基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/tensorflow小技巧/" rel="prev" title="tensorflow小技巧">
+                tensorflow小技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="liuyan">
+            
+              <p class="site-author-name" itemprop="name">liuyan</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry, Stay Foolish.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuyanfeier" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="liuyanfeier@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语音识别基本架构"><span class="nav-number">1.</span> <span class="nav-text">语音识别基本架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声学模型（Acoustic-Model，AM）"><span class="nav-number">2.</span> <span class="nav-text">声学模型（Acoustic Model，AM）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CD-DNN—HMM模型"><span class="nav-number">2.1.</span> <span class="nav-text">CD-DNN—HMM模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CTC模型"><span class="nav-number">2.2.</span> <span class="nav-text">CTC模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#End-to-End模型"><span class="nav-number">2.3.</span> <span class="nav-text">End-to-End模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言模型（Language-Model，-LM）"><span class="nav-number">3.</span> <span class="nav-text">语言模型（Language Model， LM）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解码"><span class="nav-number">4.</span> <span class="nav-text">解码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuyan</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
