@@ -346,7 +346,7 @@
         
           <h3 id="viterbi算法"><a href="#viterbi算法" class="headerlink" title="viterbi算法"></a>viterbi算法</h3><p>维特比算法说白了就是动态规划实现最短路径，只要知道动态规划是通过空间换时间的一种方法就可以了。HMM的解码部分使用的是viterbi算法。</p>
 <p><img src="/2019/01/07/viterbi以及forward-backword算法/1.png" alt=""></p>
-<p>假设上图每一列分别有$ n _ {1},…,n _ {n} $个节点，如果不使用动态的话，那么计算最短路径的时间复杂度就是$ O(n _ {1} <em> n _ {2} </em> … * n _ {n}) $。</p>
+<p>假设上图每一列分别有$ n _ {1},…,n _ {n} $个节点，如果不使用动态的话，那么计算最短路径的时间复杂度就是$ O(n _ {1} * n _ {2} * … * n _ {n}) $。</p>
 <p>维特比算法的精髓就是，既然知道到第i列所有节点Xj{j=1,2,3…}的最短路径，那么到第i+1列节点的最短路径就等于到第i列j个节点的最短路径+第i列j个节点到第i+1列各个节点的距离的最小值。</p>
 <p>分析一下复杂度，假设整个有向无环图中每一列节点最多有D个（也就是图的宽度为D），并且图一共有N列，那么，每次计算至多计算D*D次（i列的D个节点到i+1列D个节点的距离）。至多计算N次。那么时间复杂度为O（ND^2），远远小于穷举法O（D^N）。</p>
           <!--noindex-->
@@ -1442,6 +1442,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/ctc在asr上的应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="You're Beautiful">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/08/ctc在asr上的应用/" itemprop="url">ctc在asr上的应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T11:20:54+08:00">
+                2017-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/语音识别/" itemprop="url" rel="index">
+                    <span itemprop="name">语音识别</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="CTC概念"><a href="#CTC概念" class="headerlink" title="CTC概念"></a>CTC概念</h3><p>CTC算法全称叫：Connectionist temporal classification，从字面上理解它是用来解决时序类数据的分类问题的。</p>
+<p>下图是nihao这句话的声音波形示意图，每个红色的框代表一帧数据，传统DNN训练需要知道每一帧数据对应的发音音素。比如第1,2,3,4帧对应n的发音，第5,6,7帧对应i的音素……（这里暂且将每个字母作为一个发音音素，下同）</p>
+<p><img src="/2017/10/08/ctc在asr上的应用/1.png" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/08/ctc在asr上的应用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/fbank和mfcc特征提取/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1577,157 +1725,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/语音识别基本原理/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="liuyan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="You're Beautiful">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/07/语音识别基本原理/" itemprop="url">语音识别基本原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-07T15:32:30+08:00">
-                2017-10-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/语音识别/" itemprop="url" rel="index">
-                    <span itemprop="name">语音识别</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="语音识别基本架构"><a href="#语音识别基本架构" class="headerlink" title="语音识别基本架构"></a>语音识别基本架构</h2><p><img src="/2017/10/07/语音识别基本原理/1.png" alt=""></p>
-<p>上式中W表示文字序列，Y表示语音输入。</p>
-<p>公式1表示语音识别的目标是在给定语音输入的情况下，找到可能性最大的文字序列。</p>
-<p>根据贝叶斯定理，可以得到公式2，其中分母表示出现这条语音的概率，它相比于求解的文字序列没有参数关系，可以在求解时忽略，进而得到公式3。</p>
-<p>公式3中第一部分表示给定一个文字序列出现这条音频的概率，它就是语音识别中的声学模型；第二部分表示出现这个文字序列的概率，它就是语音识别中的语言模型。</p>
-<p>无论是传统的方法也好，现在火热的深度神经网络的方法也罢，目前的语音识别在架构上都没有脱离上面的公式，也就是说都离不开AM和LM。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/07/语音识别基本原理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1780,7 +1777,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1802,7 +1799,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

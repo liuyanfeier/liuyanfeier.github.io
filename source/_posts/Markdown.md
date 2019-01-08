@@ -64,25 +64,17 @@ $$
 ## 实例
 
 ```
-\mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix} 
-\mathbf{i} & \mathbf{j} & \mathbf{k} \\
-\frac{\partial X}{\partial u} &  \frac{\partial Y}{\partial u} & 0 \\
-\frac{\partial X}{\partial v} &  \frac{\partial Y}{\partial v} & 0 \\
-\end{vmatrix}
+\mathbf { V } _ { 1 } \times \mathbf { V } _ { 2 } = \left| \begin{array} { c c c } { \mathbf { i } } & { \mathbf { j } } & { \mathbf { k } } \\ { \frac { \partial X } { \partial u } } & { \frac { \partial Y } { \partial u } } & { 0 } \\ { \frac { \partial X } { \partial v } } & { \frac { \partial Y } { \partial v } } & { 0 } \end{array} \right|
 ```
 $$
-\mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix} 
-\mathbf{i} & \mathbf{j} & \mathbf{k} \\
-\frac{\partial X}{\partial u} &  \frac{\partial Y}{\partial u} & 0 \\
-\frac{\partial X}{\partial v} &  \frac{\partial Y}{\partial v} & 0 \\
-\end{vmatrix}
+\mathbf { V } _ { 1 } \times \mathbf { V } _ { 2 } = \left| \begin{array} { c c c } { \mathbf { i } } & { \mathbf { j } } & { \mathbf { k } } \\ { \frac { \partial X } { \partial u } } & { \frac { \partial Y } { \partial u } } & { 0 } \\ { \frac { \partial X } { \partial v } } & { \frac { \partial Y } { \partial v } } & { 0 } \end{array} \right|
 $$
 
 ```
 lim_{x \to \infty} \ exp(-x)=0
 ```
 $$
-lim_{x \to \infty} \ exp(-x)=0
+lim _ {x \to \infty} \ exp(-x)=0
 $$
 
 
