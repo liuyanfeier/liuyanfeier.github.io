@@ -6,11 +6,13 @@
 
 ### 部署写作
 
-- hexo new [layout] title       新建文章，source/\_posts 目录下生成一个 .md 文件，可以在命令中指定文章的布局（layout），默认为 post。可以将 layout 设为 draft 那该文章就会被放入草稿箱 source/\_drafts。
-- hexo publish [layout] title   当文章被放入草稿箱 source/\_drafts 之后可以使用该命令将 source/\_drafts 文章放入 source/\_posts 中。
-- hexo g                        生成静态页面
-- hexo d                        部署到github
-- hexo clean                    清空所有生成的网页缓存
+```shell
+- hexo new [layout] title       #新建文章，source/\_posts 目录下生成一个 .md 文件，可以在命令中指定文章的布局（layout），默认为 post。可以将 layout 设为 draft 那该文章就会被放入草稿箱 source/\_drafts。
+- hexo publish [layout] title   #当文章被放入草稿箱 source/\_drafts 之后可以使用该命令将 source/\_drafts 文章放入 source/\_posts 中。
+- hexo g                        #生成静态页面
+- hexo d                        #部署到github
+- hexo clean                    #清空所有生成的网页缓存
+```
 
 ### git提交
 
@@ -22,7 +24,7 @@
 ### 写作技巧
 
 1. 文章头部信息
-    ```
+    ```shell
     title:      viterbi以及forward-backword算法
     author:     liuyan
     catalog:    true
