@@ -37,10 +37,10 @@ awk '{print $NF-1}' filename  	#取倒数第二列
 
 ### sed修改文本内容
 ```sh
-sed 's/^/HEAD&/g' filename		    #在每行的头添加字符"HEAD"
-sed 's/$/&TAIL/g' filename		    #在每行的尾添加字符“TAIL”
-sed  's/a/b/g'  filename		    #将文本中的"a"换成"b"
-sed -e 'nc/just do' filename	    #把第n行替换成just do
+sed 's/^/HEAD&/g' filename          #在每行的头添加字符"HEAD"
+sed 's/$/&TAIL/g' filename          #在每行的尾添加字符“TAIL”
+sed  's/a/b/g'  filename            #将文本中的"a"换成"b"
+sed -e 'nc/just do' filename        #把第n行替换成just do
 sed -e '1,10c/I can do' filename    #把1到10行替换成一行：I can do
 
 #"^"代表行首，"$"代表行尾，字符g代表每行出现的字符全部替换
@@ -62,13 +62,13 @@ grep [options] PATTERN [FILE...]
 
 #### 实例
 ```shell
-ls -l | grep '^a'		    #只显示以a开头的行
-ls -l | grep '$a'		    #只显示以a结尾的行
-grep 'test' d*			    #显示所有以d开头的文件中包含test的行
+ls -l | grep '^a'           #只显示以a开头的行
+ls -l | grep '$a'           #只显示以a结尾的行
+grep 'test' d*              #显示所有以d开头的文件中包含test的行
 grep 'test' aa bb cc        #显示在aa，bb，cc文件中匹配test的行
-grep '[a-z]\{5\}' aa    	#显示aa中所有有5个连续小写字符的行
-grep -i '^s' a			    #不区分大小以s/S开头的行
-grep ':[0-9]:' a		    #两个冒号中间一个数字的行
+grep '[a-z]\{5\}' aa        #显示aa中所有有5个连续小写字符的行
+grep -i '^s' a              #不区分大小以s/S开头的行
+grep ':[0-9]:' a            #两个冒号中间一个数字的行
 ```
 
 ### 环境变量
