@@ -51,5 +51,6 @@ npm install hexo-deployer-git --save
 npm install hexo-asset-image --save
 npm install hexo-math --save
 npm install hexo-wordcount --save
+npm install hexo-all-minifier --save
 ```
 
