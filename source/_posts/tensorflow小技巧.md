@@ -5,6 +5,7 @@ catalog:    true
 tags:
   - tensorflow
   - deep learning
+  - 工具
 date: 2017-10-14 16:37:39
 urlname:
 categories: deep learning

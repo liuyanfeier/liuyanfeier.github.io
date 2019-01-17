@@ -5,6 +5,7 @@ catalog:    true
 tags:
   - linux
   - gdb
+  - 工具
 date:       2019-01-04 15:41:33
 urlname:
 categories: linux

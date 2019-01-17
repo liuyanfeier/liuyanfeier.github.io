@@ -3,7 +3,8 @@ title:      vim和shell技巧
 author:     liuyan
 catalog:    true
 tags:
-  - linux 
+  - linux
+  - 工具  
 date:       2018-01-03 19:44:05
 urlname:
 categories: linux

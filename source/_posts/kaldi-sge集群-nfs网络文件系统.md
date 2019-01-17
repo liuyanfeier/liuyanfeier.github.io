@@ -7,6 +7,7 @@ tags:
   - 语音识别
   - sge
   - nfs
+  - 工具
 date:       2018-09-09 16:42:26
 urlname:
 categories: 语音识别
