@@ -83,8 +83,9 @@ $$
 
 流程图：
 ![](2.png)
+该流程图是kaldi nnet3中的DT计算过程。
 
-该流程图是kaldi nnet3中的DT计算过程，其中的lattice rescore是DNN前向计算出$ P ( s | o ) $，除以先验概率$ P ( s ) $，得到似然概率$ P ( o | s ) $，替换lattice边上对应的$ P ( o | s ) $。
+lattice rescore是DNN前向计算出$ P ( s | o ) $，除以先验概率$ P ( s ) $，得到似然概率$ P ( o | s ) $，替换lattice边上对应的$ P ( o | s ) $。
 其中`vector<BaseFloat> answers`是前面计算出来的DNN的输出对应参考pdf的概率。
 ```c++
 // nnet3/discriminative-training.cc
